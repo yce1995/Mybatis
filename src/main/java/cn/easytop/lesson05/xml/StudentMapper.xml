@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.easytop.lesson05.xml.StudentMapper">
+ 
+ 
+  <!-- 
+     if 判断条件是否满足 满足 就if中的sql 自动拼接到主sql
+	     where 自动判断第一个条件是否存在where 如果没有 where 追加 
+	         	同时 去掉一个and
+	     trim 永远 灵活度更高      	
+              prefix配置的参数会被添加 在sql语句开始的地方
+              prefixOverrides sql语句首次出现的参数会被覆盖
+            <trim prefix="WhEre" prefixOverrides="and"></trim>========where  
+   -->
+  <select id="queryStudentById" resultType="student">
+      select * from student where sid=#{0}
+  </select>
+</mapper>

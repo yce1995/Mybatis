@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 接口绑定 将接口中的方法和对应得sql声明进行绑定 
+	 接口绑定的参数 可以通过索引的方式获取 索引从0开始
+	 
+-->
+<mapper namespace="cn.easytop.lesson03.resultMap.xml.GradeMapper">
+
+<resultMap type="grade" id="gradeMap" autoMapping="true">
+	<!-- 列和属性的关系 主键使用ID  非主键使用 result -->
+	<id column="gid" property="gid"/>
+	<result column="gname" property="gname1" />
+</resultMap>
+
+<!-- 对用一对多映射 -->
+<resultMap type="grade" id="gradeOne" autoMapping="true">
+	<!-- 列和属性的关系 主键使用ID  非主键使用 result -->
+	<id column="gid" property="gid"/>
+	<result column="gname" property="gname1" />
+	<collection property="studentList" column="gid" javaType="list" select="cn.easytop.lesson03.resultMap.xml.StudentMapper.queryStudentByGid"></collection>
+</resultMap>
+
+ <!-- 结果集映射：数据库的列名和实体类的属性名 如果名字不一致 需要建立 列名和属性名的映射关系
+ 			结果集映射返回的结果是相同的 都是grade 只是多了一层关系
+  -->
+  <select id="queryAllGrade" resultMap="gradeMap">
+     select * from grade
+  </select>
+  
+  <select id="queryGradeByGid" resultMap="gradeMap">
+  	select * from grade where gid=#{gid}
+  </select>
+  
+  <!-- 映射一对多 -->
+  <select id="queryGrade" resultMap="gradeOne"> 
+  	select * from grade where gid=#{gid}
+  </select>
+  
+</mapper>
